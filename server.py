@@ -27,14 +27,14 @@ def download_task(task_id: str, url: str):
             percent = d.get('_percent_str', '').strip()
             eta = d.get('_eta_str', '').strip()
             
-            # On met à jour l'entrée existante si elle existe
+            # Update existing entry if it exists
             if task_id in TASKS:
                 TASKS[task_id].update({
                     "status": "downloading",
-                    "percent": re.sub(r'\x1b\[[0-9;]*m', '', percent), # Retire les couleurs ANSI
+                    "percent": re.sub(r'\x1b\[[0-9;]*m', '', percent), # Remove ANSI colors
                     "eta": re.sub(r'\x1b\[[0-9;]*m', '', eta)
                 })
-                # Capture du titre 
+                # Capture title 
                 if d.get('info_dict') and 'title' in d['info_dict']:
                     TASKS[task_id]["title"] = d['info_dict']['title']
     
@@ -86,7 +86,7 @@ async def start_download(url: str = Form(...), background_tasks: BackgroundTasks
 @app.get("/status/{task_id}")
 async def get_status(task_id: str):
     if task_id not in TASKS:
-        raise HTTPException(status_code=404, detail="Tâche introuvable")
+        raise HTTPException(status_code=404, detail="Task not found")
     return TASKS[task_id]
 
 class TaskList(BaseModel):
@@ -107,11 +107,11 @@ async def get_batch_status(tasks: TaskList):
 @app.get("/file/{task_id}")
 async def get_file(task_id: str, background_tasks: BackgroundTasks = BackgroundTasks()):
     if task_id not in TASKS or TASKS[task_id]["status"] != "done":
-        raise HTTPException(status_code=400, detail="Le fichier n'est pas encore prêt")
+        raise HTTPException(status_code=400, detail="File is not ready yet")
         
     file_info = TASKS[task_id]
     
-    # Nettoyage après l'envoi
+    # Cleanup after sending
     background_tasks.add_task(cleanup_file, file_info["filepath"], task_id)
     
     return FileResponse(
@@ -124,16 +124,16 @@ async def get_file(task_id: str, background_tasks: BackgroundTasks = BackgroundT
 async def dashboard():
     html_content = """
     <!DOCTYPE html>
-    <html lang="fr">
+    <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <title>Téléchargements</title>
+        <title>Downloads</title>
         <style>
             body { 
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
                 padding: 20px; 
-                background: #1c1c1e; /* Fond sombre iOS */
+                background: #1c1c1e; /* Dark background iOS */
                 color: #f2f2f7; 
                 margin: 0;
             }
@@ -155,7 +155,7 @@ async def dashboard():
                 overflow: hidden; 
             }
             .progress-fill { 
-                background: #0a84ff; /* Bleu Apple */
+                background: #0a84ff; /* Apple Blue */
                 height: 100%; 
                 width: 0%; 
                 transition: width 0.4s ease-out; 
@@ -163,21 +163,21 @@ async def dashboard():
         </style>
     </head>
     <body>
-        <h2>Serveur Homelab 📡</h2>
-        <div id="tasks">Récupération des données...</div>
+        <h2>YT DL iOS Shortcut Dashboard📡</h2>
+        <div id="tasks">Fetching data...</div>
 
         <script>
-            // Récupérer les IDs depuis l'URL (?ids=uuid1,uuid2)
+            // Get URLs from URL (?ids=uuid1,uuid2)
             const urlParams = new URLSearchParams(window.location.search);
             const idsParam = urlParams.get('ids');
             const taskIds = idsParam ? idsParam.split(',').filter(id => id.trim() !== '') : [];
             
             const tasksDiv = document.getElementById('tasks');
-            let autoRedirected = false; // Sécurité pour ne rediriger qu'une seule fois
+            let autoRedirected = false; // Safety to redirect only once
 
             async function fetchStatus() {
                 if (taskIds.length === 0) {
-                    tasksDiv.innerHTML = "<div class='task'><div class='title'>Aucun téléchargement dans la file d'attente.</div></div>";
+                    tasksDiv.innerHTML = "<div class='task'><div class='title'>No downloads in queue.</div></div>";
                     return;
                 }
                 
@@ -190,29 +190,29 @@ async def dashboard():
                     const data = await response.json();
                     
                     let html = '';
-                    let isEverythingFinished = true; // On suppose que tout est fini par défaut
+                    let isEverythingFinished = true; // Assume everything is finished by default
                     let hasAtLeastOneDone = false;
                     
                     data.tasks.forEach(task => {
-                        let title = task.title || "Récupération des infos vidéo...";
+                        let title = task.title || "Fetching video info...";
                         let statusText = "";
                         let progressHtml = "";
                         
                         if (task.status === 'done') {
-                            statusText = "✅ Terminé et prêt !";
+                            statusText = "✅ Done and ready!";
                             hasAtLeastOneDone = true;
                         } else if (task.status === 'downloading') {
-                            statusText = `⏳ Téléchargement : ${task.percent} (Reste: ${task.eta})`;
+                            statusText = `⏳ Downloading: ${task.percent} (Remaining: ${task.eta})`;
                             let percentNum = parseFloat(task.percent) || 0;
                             progressHtml = `<div class="progress-bar"><div class="progress-fill" style="width: ${percentNum}%;"></div></div>`;
-                            isEverythingFinished = false; // Il y a encore de l'activité
+                            isEverythingFinished = false; // Still active
                         } else if (task.status === 'pending') {
-                            statusText = "🕒 Démarrage...";
-                            isEverythingFinished = false; // Il y a encore de l'activité
+                            statusText = "🕒 Starting...";
+                            isEverythingFinished = false; // Still active
                         } else if (task.status === 'error') {
-                            statusText = `❌ Erreur: ${task.error_msg}`;
+                            statusText = `❌ Error: ${task.error_msg}`;
                         } else {
-                            statusText = "Ticket expiré ou introuvable";
+                            statusText = "Ticket expired or not found";
                         }
                         
                         html += `
@@ -225,30 +225,30 @@ async def dashboard():
                     
                     tasksDiv.innerHTML = html;
                     
-                    // --- LA REDIRECTION AUTOMATIQUE ---
+                    // --- AUTOMATIC REDIRECTION ---
                     if (hasAtLeastOneDone && isEverythingFinished && !autoRedirected) {
-                        autoRedirected = true; // Empêche les multiples redirections
+                        autoRedirected = true; // Prevents multiple redirections
                         
-                        // Affichage d'un petit indicateur visuel 
+                        // Display visual indicator
                         tasksDiv.innerHTML += `
                         <div style="text-align:center; margin-top: 25px; color: #34c759; font-weight: 600; font-size: 17px; animation: pulse 1.5s infinite;">
-                            📥 Ouverture automatique...
+                            📥 Opening automatically...
                         </div>
                         <style>@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }</style>
                         `;
                         
-                        // Lancement silencieux du raccourci iOS après un bref délai (800ms)
+                        // Silent launch of iOS shortcut after brief delay (800ms)
                         setTimeout(() => {
                             window.location.href = "shortcuts://run-shortcut?name=Get%20downloaded%20videos";
                         }, 800);
                     }
                     
                 } catch (e) {
-                    console.error("Erreur de connexion au serveur", e);
+                    console.error("Server connection error", e);
                 }
             }
 
-            // Lancement immédiat puis toutes les 1.5 secondes
+            // Immediate launch then every 1.5 seconds
             fetchStatus();
             setInterval(fetchStatus, 1500);
         </script>

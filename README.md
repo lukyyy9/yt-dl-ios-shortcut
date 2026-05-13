@@ -61,24 +61,22 @@ Download and install the two required shortcuts directly to your iPhone using th
 - 📥 [Shortcut 1: Download YouTube video](https://www.icloud.com/shortcuts/736e0973dd854e299251e61589bc222b)
 - 🔄 [Shortcut 2: Get downloaded videos](https://www.icloud.com/shortcuts/4f27cd7dfa244b0b945bcccddeeda4e1)
 
-### Step 3: Configure the IP Address
+### Step 3: Configure the shortcuts
 
 Once installed, open both shortcuts in the Shortcuts app to edit them:
 
-1. Find the **"Get contents of URL"** actions.
-2. Replace the TAILSCALE_IP placeholder with your actual server IP.
+1. Rename the shortcuts with the provided names (Download YouTube video and Get downloaded videos) so the automatic redirection of the web dashboard works correctly.
+1. Replace all the SERVER_IP placeholders with your actual server IP.
 
 ### Step 4: Set up the iOS Automation (Recommended)
 
-To make the system truly seamless, set up your iPhone to fetch videos while you sleep or when you leave the house:
+For more consistency, set up your iPhone to fetch videos while you sleep or when you leave specific locations. This will make sure you always download videos regularly, even if you leave the dashboard page before the download is ready.
 
 1. Open the **Shortcuts** app and go to the **Automation** tab.
 2. Tap the **+** button to create a new **Personal Automation**.
 3. Choose **Time of Day** (e.g., 2:00 AM) or **When I Leave** (to trigger when you leave home).
 4. Select **Run Immediately** (and disable **"Notify When Run"** for a silent experience).
 5. Tap **Next**, search for the **Get downloaded videos** shortcut, and select it.
-
-You are all set! Share any YouTube video to the **"Request a download"** shortcut, and wake up to find it saved in your iPhone's "YouTube" directory.
 
 ## 🛠️ CI/CD
 
