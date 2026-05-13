@@ -10,16 +10,12 @@ A lightweight server based on FastAPI and `yt-dlp` designed to work seamlessly w
 - **Clean Naming Convention:** Videos are saved as `Video Title - Channel Name.mp4`.
 - **Tailscale Friendly:** Designed to work from anywhere over 4G/5G without exposing any ports on your local router.
 
----
-
 ## 📖 Usage
 
 1. **Find a Video:** Open the YouTube app (or any browser) on your iPhone and go to the video you want to download.
 2. **Trigger the Download:** Tap the **Share** button and select the **"Request a download"** shortcut. The server starts downloading the video in the background.
 3. **Fetch the Video:** Open the Shortcuts app and run the **"Get downloaded videos"** shortcut (or rely on the background iOS Automation if configured).
 4. **Enjoy:** The video is safely moved to your iPhone's "YouTube" directory and automatically deleted from the server.
-
----
 
 ## 💻 Server Installation
 
@@ -47,8 +43,6 @@ docker run -d \
    - **Port:** Host 8007 -> Container 8007
    - **Volume:** Host `/DATA/AppData/yt-dl-ios-shortcut/downloads` -> Container `/app/downloads`
 4. Click **Install**.
-
----
 
 ## 📱 iOS Setup
 
