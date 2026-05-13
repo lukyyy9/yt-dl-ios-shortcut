@@ -5,6 +5,8 @@ A lightweight server based on FastAPI and `yt-dlp` designed to work seamlessly w
 ## 🚀 Features
 
 - **Fully Asynchronous:** Bypasses Apple's strict shortcut timeout limits. Trigger the download, close the shortcut, and let the server do the heavy lifting.
+- **Real-Time Web Dashboard:** Monitor ongoing downloads visually via a sleek mobile-friendly dashboard.
+- **Auto-Redirect:** The dashboard automatically opens the Shortcuts app when all downloads are complete to seamlessly fetch the final video.
 - **Quality Limiter:** Automatically downloads the best available quality capped at 1080p to save storage space.
 - **Auto-Cleanup:** Video files are automatically deleted from your server as soon as they are successfully fetched by your iPhone.
 - **Clean Naming Convention:** Videos are saved as `Video Title - Channel Name.mp4`.
@@ -13,8 +15,8 @@ A lightweight server based on FastAPI and `yt-dlp` designed to work seamlessly w
 ## 📖 Usage
 
 1. **Find a Video:** Open the YouTube app (or any browser) on your iPhone and go to the video you want to download.
-2. **Trigger the Download:** Tap the **Share** button and select the **"Request a download"** shortcut. The server starts downloading the video in the background.
-3. **Fetch the Video:** Open the Shortcuts app and run the **"Get downloaded videos"** shortcut (or rely on the background iOS Automation if configured).
+2. **Trigger the Download:** Tap the **Share** button and select the **"Request a download"** shortcut. The server starts downloading the video in the background (and you optionally get redirected to a live web dashboard to monitor progress).
+3. **Fetch the Video:** Open the Shortcuts app and run the **"Get downloaded videos"** shortcut (or rely on the auto-redirect from the web dashboard, or the background iOS Automation if configured).
 4. **Enjoy:** The video is safely moved to your iPhone's "YouTube" directory and automatically deleted from the server.
 
 ## 💻 Server Installation
