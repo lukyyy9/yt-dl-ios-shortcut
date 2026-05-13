@@ -1,4 +1,4 @@
-# 📱 yt-dl-ios-shortcut
+# 📱 YT DL iOS Shortcut
 
 A lightweight server based on FastAPI and `yt-dlp` designed to work seamlessly with the iOS Shortcuts app. It allows you to download YouTube videos to your iPhone by simply sharing the video to a shortcut. The server handles the download process asynchronously, ensuring no timeouts. Videos are automatically cleaned up from the server once fetched by your iPhone, keeping your storage tidy.
 
