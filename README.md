@@ -1,6 +1,6 @@
 # 📱 yt-dl-ios-shortcut
 
-A lightweight server based on FastAPI and `yt-dlp` designed to work seamlessly with the iOS Shortcuts app. It allows you to trigger YouTube video downloads from your iPhone to your home server (Homelab) in the background, and automatically fetch the downloaded videos straight to your Camera Roll later.
+A lightweight server based on FastAPI and `yt-dlp` designed to work seamlessly with the iOS Shortcuts app. It allows you to download YouTube videos to your iPhone by simply sharing the video to a shortcut. The server handles the download process asynchronously, ensuring no timeouts. Videos are automatically cleaned up from the server once fetched by your iPhone, keeping your storage tidy.
 
 ## 🚀 Features
 
@@ -29,7 +29,6 @@ Run the following command on your server:
 docker run -d \
   --name yt-dl-ios-shortcut \
   -p 8007:8007 \
-  -v ./downloads:/app/downloads \
   imluky/yt-dl-ios-shortcut:latest
 ```
 
@@ -41,7 +40,6 @@ docker run -d \
    - **Docker Image:** `imluky/yt-dl-ios-shortcut:latest` (or your local build name)
    - **Title:** YT-DLP iOS Shortcut
    - **Port:** Host 8007 -> Container 8007
-   - **Volume:** Host `/DATA/AppData/yt-dl-ios-shortcut/downloads` -> Container `/app/downloads`
 4. Click **Install**.
 
 ## 📱 iOS Setup
