@@ -40,7 +40,7 @@ docker run -d \
 2. Click on **Custom Install** (top right).
 3. Fill in the fields:
    - **Docker Image:** `imluky/yt-dl-ios-shortcut:latest` (or your local build name)
-   - **Title:** YT-DLP iOS Shortcut
+   - **Title:** YT DL iOS Shortcut
    - **Port:** Host 8007 -> Container 8007
 4. Click **Install**.
 
