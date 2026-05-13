@@ -58,8 +58,8 @@ Before running the shortcuts, you need to create a text file to store the downlo
 
 Download and install the two required shortcuts directly to your iPhone using the links below:
 
-- 📥 [Shortcut 1: Request a download](https://www.icloud.com/shortcuts/5d2badce5c0c4cb2a68d922e773a6818)
-- 🔄 [Shortcut 2: Get downloaded videos](https://www.icloud.com/shortcuts/063ce79dd22a410d8c13bf8766a5f7ef)
+- 📥 [Shortcut 1: Download YouTube video](https://www.icloud.com/shortcuts/736e0973dd854e299251e61589bc222b)
+- 🔄 [Shortcut 2: Get downloaded videos](https://www.icloud.com/shortcuts/4f27cd7dfa244b0b945bcccddeeda4e1)
 
 ### Step 3: Configure the IP Address
 
